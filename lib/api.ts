@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://e-comerce-be-production.up.railway.app';
 
 interface ApiOptions {
   method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
