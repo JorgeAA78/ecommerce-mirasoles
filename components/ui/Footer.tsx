@@ -57,7 +57,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 text-center">
-          <p className="text-sm text-gray-500">© 2026 Mirasoles Market. Hecho con 🌻 para el barrio.</p>
+          <p className="text-sm text-gray-500">© 2026 Mirasoles Market. Hecho con ❤️ para el barrio.</p>
         </div>
       </div>
     </footer>

@@ -20,8 +20,7 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="bg-[#F2C94C] py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <span className="text-5xl md:text-6xl mb-4 block">🌻</span>
-          <h1 className="text-3xl md:text-5xl font-bold text-black mb-4">
+                    <h1 className="text-3xl md:text-5xl font-bold text-black mb-4">
             Mirasoles Market
           </h1>
           <p className="text-lg md:text-xl text-black/80 mb-8 max-w-lg mx-auto">
