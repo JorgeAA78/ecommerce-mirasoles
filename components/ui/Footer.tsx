@@ -23,12 +23,7 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Copyright */}
-          <div className="md:text-center">
-            <p className="text-sm text-gray-400">©2026 Mirasoles Market</p>
-          </div>
-
-          {/* Social Links */}
+                    {/* Social Links */}
           <div className="md:text-right">
             <h4 className="font-semibold mb-2">Redes</h4>
             <div className="space-y-2">
@@ -56,8 +51,12 @@ export default function Footer() {
               </a>
             </div>
           </div>
-        </div>
+                </div>
       </div>
+          {/* Copyright */}
+          <div className="md:text-center">
+            <p className="text-sm text-gray-400">©2026 Mirasoles Market</p>
+          </div>  
     </footer>
   );
 }
