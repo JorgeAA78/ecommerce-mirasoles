@@ -1,11 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { api, User } from '@/lib/api';
 import { auth } from '@/lib/auth';
 
 export default function ProfilePage() {
+  return (
+    <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><p className="text-gray-500">Cargando...</p></div>}>
+      <ProfileContent />
+    </Suspense>
+  );
+}
+
+function ProfileContent() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
