@@ -2,13 +2,22 @@ import { api, Product } from '@/lib/api';
 import { ProductCard } from '@/components/ui';
 import Link from 'next/link';
 
+const CATEGORIES = [
+  { label: 'Todos', value: '' },
+  { label: 'Ropa', value: 'ropa' },
+  { label: 'Calzado', value: 'calzado' },
+  { label: 'Accesorios', value: 'accesorios' },
+  { label: 'Electrónica', value: 'electronica' },
+];
+
 interface SearchPageProps {
-  searchParams: Promise<{ q?: string; offset?: string }>;
+  searchParams: Promise<{ q?: string; offset?: string; category?: string }>;
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const params = await searchParams;
   const query = params.q || '';
+  const category = params.category || '';
   const offset = parseInt(params.offset || '0', 10);
   const limit = 9;
 
@@ -17,9 +26,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   let error = '';
 
   try {
-    const result = await api.products.search(query, offset, limit);
+    const searchQuery = category || query;
+    const result = await api.products.search(searchQuery, offset, limit);
     products = result.hits || [];
     totalHits = result.total || result.nbHits || 0;
+
+    if (category) {
+      products = products.filter(p => p.category === category);
+      totalHits = products.length;
+    }
   } catch (err) {
     console.error('Search error:', err);
     error = 'Error al buscar productos';
@@ -28,11 +43,19 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const hasMore = offset + products.length < totalHits;
   const hasPrev = offset > 0;
 
+  const buildPaginationUrl = (newOffset: number) => {
+    const params = new URLSearchParams();
+    if (query) params.set('q', query);
+    if (category) params.set('category', category);
+    params.set('offset', String(newOffset));
+    return `/search?${params.toString()}`;
+  };
+
   return (
     <div className="py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Search Form */}
-        <form action="/search" method="GET" className="mb-8">
+        <form action="/search" method="GET" className="mb-6">
           <div className="flex flex-col sm:flex-row gap-2 max-w-xl">
             <input
               type="text"
@@ -50,9 +73,28 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
         </form>
 
+        {/* Category Filter */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {CATEGORIES.map((cat) => (
+            <Link
+              key={cat.value}
+              href={cat.value ? `/search?category=${cat.value}` : '/search?q='}
+              className={`px-4 py-2 text-sm font-medium border-2 transition-colors ${
+                category === cat.value
+                  ? 'bg-[#F2C94C] text-black border-[#F2C94C]'
+                  : 'border-gray-300 text-gray-700 hover:border-[#F2C94C]'
+              }`}
+            >
+              {cat.label}
+            </Link>
+          ))}
+        </div>
+
         {/* Results Count */}
         <p className="text-sm text-gray-600 mb-6">
-          {totalHits} resultados de {query ? `"${query}"` : 'todos los productos'}
+          {totalHits} resultados
+          {query && ` de "${query}"`}
+          {category && ` en ${category}`}
         </p>
 
         {error ? (
@@ -70,26 +112,29 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <div className="flex justify-center gap-4 mt-8">
               {hasPrev && (
                 <Link
-                  href={`/search?q=${encodeURIComponent(query)}&offset=${Math.max(0, offset - limit)}`}
-                  className="text-black hover:underline"
+                  href={buildPaginationUrl(Math.max(0, offset - limit))}
+                  className="px-6 py-2 border-2 border-black text-black hover:bg-black hover:text-white transition-colors font-medium"
                 >
                   &lt; Anterior
                 </Link>
               )}
               {hasMore && (
                 <Link
-                  href={`/search?q=${encodeURIComponent(query)}&offset=${offset + limit}`}
-                  className="text-black hover:underline"
+                  href={buildPaginationUrl(offset + limit)}
+                  className="px-6 py-2 bg-[#F2C94C] text-black hover:bg-[#E0B83D] transition-colors font-medium"
                 >
-                  ver más &gt;
+                  Ver más &gt;
                 </Link>
               )}
             </div>
           </>
         ) : (
-          <p className="text-center text-gray-500 py-12">
-            No se encontraron productos
-          </p>
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg mb-4">No se encontraron productos</p>
+            <Link href="/search?q=" className="text-[#FF69B4] hover:underline font-medium">
+              Ver todos los productos
+            </Link>
+          </div>
         )}
       </div>
     </div>
