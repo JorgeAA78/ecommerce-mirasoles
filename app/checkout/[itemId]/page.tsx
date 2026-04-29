@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { api, Product } from '@/lib/api';
 import { auth } from '@/lib/auth';
@@ -19,6 +19,8 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
+  const [mpUrl, setMpUrl] = useState<string | null>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,6 +45,13 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
     fetchProduct();
   }, [itemId, router]);
 
+  // When mpUrl is set, auto-click the link for mobile compatibility
+  useEffect(() => {
+    if (mpUrl && linkRef.current) {
+      linkRef.current.click();
+    }
+  }, [mpUrl]);
+
   const handleCheckout = async () => {
     const token = auth.getToken();
     if (!token) {
@@ -55,7 +64,9 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
 
     try {
       const { initPoint } = await api.orders.create(token, itemId);
-      window.location.href = initPoint;
+      // Store the URL in state — the useEffect above will auto-click the <a> tag,
+      // which works correctly on both desktop and mobile (avoids popup-blocker on async).
+      setMpUrl(initPoint);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al procesar el pago');
       setProcessing(false);
@@ -143,25 +154,51 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
           <p className="text-red-500 mb-4">{error}</p>
         )}
 
-        <button
-          onClick={handleCheckout}
-          disabled={processing}
-          className="w-full bg-[#F2C94C] text-black py-4 font-semibold text-lg hover:bg-[#E0B83D] transition-colors disabled:opacity-50"
-        >
-          {processing ? (
-            <span className="flex items-center justify-center gap-2">
-              <span className="animate-spin h-5 w-5 border-2 border-black border-t-transparent rounded-full"></span>
-              Procesando...
-            </span>
-          ) : (
-            'Pagar con MercadoPago'
-          )}
-        </button>
+        {/* Hidden anchor used for mobile-compatible redirect to MercadoPago */}
+        {mpUrl && (
+          <a
+            ref={linkRef}
+            href={mpUrl}
+            className="hidden"
+            aria-hidden="true"
+          />
+        )}
+
+        {mpUrl ? (
+          // Show a visible fallback button in case auto-redirect doesn't fire
+          <a
+            href={mpUrl}
+            className="block w-full bg-[#F2C94C] text-black py-4 font-semibold text-lg text-center hover:bg-[#E0B83D] transition-colors"
+          >
+            Ir a MercadoPago →
+          </a>
+        ) : (
+          <button
+            onClick={handleCheckout}
+            disabled={processing}
+            className="w-full bg-[#F2C94C] text-black py-4 font-semibold text-lg hover:bg-[#E0B83D] transition-colors disabled:opacity-50"
+          >
+            {processing ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="animate-spin h-5 w-5 border-2 border-black border-t-transparent rounded-full"></span>
+                Procesando...
+              </span>
+            ) : (
+              'Pagar con MercadoPago'
+            )}
+          </button>
+        )}
 
         <div className="text-center mt-4 space-y-2">
-          <p className="text-sm text-gray-500">
-            Serás redirigido a MercadoPago para completar el pago de forma segura.
-          </p>
+          {mpUrl ? (
+            <p className="text-sm text-green-600 font-medium">
+              ✓ Orden creada. Si no fuiste redirigido automáticamente, tocá el botón de arriba.
+            </p>
+          ) : (
+            <p className="text-sm text-gray-500">
+              Serás redirigido a MercadoPago para completar el pago de forma segura.
+            </p>
+          )}
           <Link
             href={buildProductUrl(product)}
             className="text-sm text-[#FF69B4] hover:underline"

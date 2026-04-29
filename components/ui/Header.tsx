@@ -76,8 +76,19 @@ export default function Header() {
 
             {isAuthenticated ? (
               <>
-                <Link href="/profile" className="text-sm text-gray-300 hover:text-[#F2C94C] transition-colors">
-                  {userEmail}
+                {/* User chip with green "online" dot */}
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-2 bg-[#2A2A2A] px-3 py-1.5 rounded-full hover:bg-[#3A3A3A] transition-colors"
+                >
+                  <span className="relative flex-shrink-0">
+                    <svg className="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+                    </svg>
+                    {/* Green dot indicator */}
+                    <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#2A2A2A]"></span>
+                  </span>
+                  <span className="text-xs text-gray-300 max-w-[120px] truncate">{userEmail}</span>
                 </Link>
                 <Link
                   href="/logout"
@@ -165,6 +176,20 @@ export default function Header() {
 
             {/* Mobile Navigation */}
             <nav className="space-y-2">
+              {isAuthenticated && (
+                <div className="flex items-center gap-2 py-2 border-b border-gray-700 mb-2">
+                  <span className="relative flex-shrink-0">
+                    <svg className="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+                    </svg>
+                    <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#1A1A1A]"></span>
+                  </span>
+                  <div>
+                    <p className="text-xs text-green-400 font-semibold">Sesión iniciada</p>
+                    <p className="text-xs text-gray-400 truncate max-w-[200px]">{userEmail}</p>
+                  </div>
+                </div>
+              )}
               {!isAuthenticated && (
                 <Link href="/signin" className="block py-2 hover:text-[#F2C94C]" onClick={() => setIsMenuOpen(false)}>
                   Ingresar

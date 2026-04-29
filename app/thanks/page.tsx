@@ -6,14 +6,20 @@ interface ThanksPageProps {
 
 export default async function ThanksPage({ searchParams }: ThanksPageProps) {
   const params = await searchParams;
-  const status = params.status;
-  const isApproved = status === 'approved' || !status;
+  const rawStatus = params.status;
+  const paymentId = params.payment_id;
+
+  // MercadoPago can return "null" as a string, or omit status entirely on back-navigation.
+  // Normalise to avoid false positives.
+  const status = rawStatus === 'null' || rawStatus === 'undefined' ? undefined : rawStatus;
+
+  const isRejected = status === 'rejected' || status === 'failure' || status === 'cancelled';
   const isPending = status === 'pending' || status === 'in_process';
-  const isRejected = status === 'rejected' || status === 'failure';
+  const isApproved = !isRejected && !isPending; // everything else (approved, undefined, etc.)
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center py-12 px-4">
-      <div className="text-center max-w-md">
+      <div className="text-center max-w-md w-full">
         {isRejected ? (
           <>
             <div className="text-6xl mb-6">😔</div>
@@ -40,12 +46,18 @@ export default async function ThanksPage({ searchParams }: ThanksPageProps) {
           </>
         )}
 
+        {paymentId && (
+          <p className="text-xs text-gray-400 mb-6">
+            N° de pago: <span className="font-mono">{paymentId}</span>
+          </p>
+        )}
+
         <div className="space-y-4">
           <Link
             href="/"
             className="block w-full bg-[#F2C94C] text-black py-3 font-semibold hover:bg-[#E0B83D] transition-colors"
           >
-            Volver al inicio
+            Volver a la tienda
           </Link>
           <Link
             href="/search?q="
