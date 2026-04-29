@@ -20,8 +20,10 @@ ecomerce/
 │   ├── contacto/            # Formulario de contacto y publicidad
 │   ├── item/[itemId]/       # Detalle avanzado de producto (promos, cuotas, envío)
 │   ├── logout/              # Cierre de sesión (Actualización en tiempo real)
+│   ├── mision-vision/       # Página estática: Misión y Visión
 │   ├── privacidad/          # Política de Privacidad
 │   ├── profile/             # Perfil del usuario
+│   ├── quienes-somos/       # Página estática: Quiénes Somos
 │   ├── search/              # Búsqueda de productos
 │   ├── signin/              # Login (passwordless) con reenvío de código y cooldown
 │   ├── terminos/            # Términos de Uso
@@ -31,8 +33,8 @@ ecomerce/
 │   └── page.tsx             # Home con productos destacados
 ├── components/
 │   └── ui/
-│       ├── Header.tsx           # Header con navegación y buscador (estado de auth reactivo)
-│       ├── Footer.tsx           # Footer con links legales y logo Mercado Pago
+│       ├── Header.tsx           # Header con barra de navegación completa y dropdown de categorías
+│       ├── Footer.tsx           # Footer con links legales, medios de pago y medios de envío
 │       ├── ProductCard.tsx      # Card de producto reutilizable (con stock y descripción)
 │       ├── WhatsAppButton.tsx   # Botón flotante global de WhatsApp
 │       └── index.ts             # Barrel exports
@@ -56,6 +58,8 @@ ecomerce/
 | `/cart` | Carrito con cálculo de envío y subtotal |
 | `/checkout/{itemId}` | Formulario de facturación, entrega y conexión con MercadoPago |
 | `/contacto` | Página para contactarse o publicar productos |
+| `/quienes-somos` | Información sobre la empresa y compromiso |
+| `/mision-vision` | Detalles de misión y visión corporativa |
 | `/terminos` | Términos de Uso del sitio |
 | `/privacidad` | Política de Privacidad del sitio |
 | `/thanks` | Confirmación después de pagar |
@@ -64,11 +68,12 @@ ecomerce/
 ## Funcionalidades Recientes Destacadas
 
 - **Autenticación en Tiempo Real:** El `Header` detecta automáticamente (mediante eventos globales) cuando el usuario inicia o cierra sesión sin necesidad de recargar la página.
+- **Navegación Intuitiva:** El header cuenta con un dropdown interactivo para las categorías y accesos rápidos a las páginas institucionales.
 - **Flujo de Checkout Completo:**
   - El carrito permite seleccionar *Retiro desde local* o *Envío a domicilio*.
   - La página de checkout recolecta obligatoriamente *Datos de contacto, Facturación y Entrega* (incluyendo DNI si retira un tercero) antes de habilitar la derivación a Mercado Pago.
 - **Botón de WhatsApp Flotante:** Visible a lo largo de toda la aplicación para contacto inmediato.
-- **Transparencia Legal:** Inclusión del logo oficial de MercadoPago en el footer y de políticas de privacidad y términos adaptadas a la legislación argentina.
+- **Transparencia Legal e Información Comercial:** Inclusión de tarjetas aceptadas (Visa, Mastercard, Amex), métodos de envío (Correo Argentino, Rapi Moto), y las políticas de privacidad y términos adaptadas a la legislación argentina.
 
 ## Requisitos Previos
 
