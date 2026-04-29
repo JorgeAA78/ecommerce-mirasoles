@@ -12,12 +12,14 @@ export const auth = {
   setToken: (token: string): void => {
     if (typeof window === 'undefined') return;
     localStorage.setItem(TOKEN_KEY, token);
+    window.dispatchEvent(new Event('auth-change'));
   },
   
   removeToken: (): void => {
     if (typeof window === 'undefined') return;
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_EMAIL_KEY);
+    window.dispatchEvent(new Event('auth-change'));
   },
   
   getUserEmail: (): string | null => {
@@ -28,6 +30,7 @@ export const auth = {
   setUserEmail: (email: string): void => {
     if (typeof window === 'undefined') return;
     localStorage.setItem(USER_EMAIL_KEY, email);
+    window.dispatchEvent(new Event('auth-change'));
   },
   
   isAuthenticated: (): boolean => {

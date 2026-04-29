@@ -23,8 +23,15 @@ export default function Header() {
   const { totalItems } = useCart();
 
   useEffect(() => {
-    setIsAuthenticated(auth.isAuthenticated());
-    setUserEmail(auth.getUserEmail());
+    const updateAuth = () => {
+      setIsAuthenticated(auth.isAuthenticated());
+      setUserEmail(auth.getUserEmail());
+    };
+
+    updateAuth();
+
+    window.addEventListener('auth-change', updateAuth);
+    return () => window.removeEventListener('auth-change', updateAuth);
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
