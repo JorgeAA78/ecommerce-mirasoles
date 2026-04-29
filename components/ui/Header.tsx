@@ -146,7 +146,7 @@ export default function Header() {
       {/* Navigation Bar */}
       <div className="bg-[#2A2A2A] border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4">
-          <nav className="flex items-center gap-6 py-3 overflow-x-auto scrollbar-hide text-sm font-medium">
+          <nav className="flex items-center gap-6 py-3 flex-wrap text-sm font-medium">
             <Link href="/" className="text-gray-300 hover:text-[#F2C94C] whitespace-nowrap transition-colors">
               Inicio
             </Link>
