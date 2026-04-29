@@ -33,6 +33,9 @@ export default function Footer() {
               <Link href="/profile" className="block text-gray-400 hover:text-[#F2C94C] transition-colors">
                 Mi perfil
               </Link>
+              <Link href="/contacto" className="block text-gray-400 hover:text-[#F2C94C] transition-colors">
+                Contacto / Publicitar
+              </Link>
             </nav>
           </div>
 

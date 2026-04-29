@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header, Footer } from "@/components/ui";
+import { Header, Footer, WhatsAppButton } from "@/components/ui";
 import { CartProvider } from "@/lib/cart";
 
 const geistSans = Geist({
@@ -36,6 +36,7 @@ export default function RootLayout({
         <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>
+          <WhatsAppButton />
           <Footer />
         </CartProvider>
       </body>
