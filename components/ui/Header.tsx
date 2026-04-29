@@ -143,19 +143,46 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Category Bar */}
+      {/* Navigation Bar */}
       <div className="bg-[#2A2A2A] border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4">
-          <nav className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-hide">
-            {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.value}
-                href={cat.value ? `/search?category=${cat.value}` : '/search?q='}
-                className="text-sm text-gray-300 hover:text-[#F2C94C] px-3 py-1 whitespace-nowrap transition-colors"
-              >
-                {cat.label}
-              </Link>
-            ))}
+          <nav className="flex items-center gap-6 py-3 overflow-x-auto scrollbar-hide text-sm font-medium">
+            <Link href="/" className="text-gray-300 hover:text-[#F2C94C] whitespace-nowrap transition-colors">
+              Inicio
+            </Link>
+            
+            {/* Categorías Dropdown */}
+            <div className="relative group cursor-pointer z-50">
+              <span className="text-gray-300 hover:text-[#F2C94C] flex items-center gap-1 transition-colors whitespace-nowrap">
+                Categorías
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+              <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 shadow-xl rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="py-2">
+                  {CATEGORIES.map((cat) => (
+                    <Link
+                      key={cat.value}
+                      href={cat.value ? `/search?category=${cat.value}` : '/search?q='}
+                      className="block px-4 py-2 text-black hover:bg-gray-100 transition-colors"
+                    >
+                      {cat.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <Link href="/contacto" className="text-gray-300 hover:text-[#F2C94C] whitespace-nowrap transition-colors">
+              Contacto
+            </Link>
+            <Link href="/quienes-somos" className="text-gray-300 hover:text-[#F2C94C] whitespace-nowrap transition-colors">
+              Quiénes Somos
+            </Link>
+            <Link href="/mision-vision" className="text-gray-300 hover:text-[#F2C94C] whitespace-nowrap transition-colors">
+              Misión y Visión
+            </Link>
           </nav>
         </div>
       </div>

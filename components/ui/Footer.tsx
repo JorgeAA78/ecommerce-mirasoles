@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#1A1A1A] text-white mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-3">
@@ -39,25 +39,6 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Categories */}
-          <div>
-            <h4 className="font-semibold mb-3">Categorías</h4>
-            <nav className="space-y-2 text-sm">
-              <Link href="/search?category=ropa" className="block text-gray-400 hover:text-[#F2C94C] transition-colors">
-                Ropa
-              </Link>
-              <Link href="/search?category=calzado" className="block text-gray-400 hover:text-[#F2C94C] transition-colors">
-                Calzado
-              </Link>
-              <Link href="/search?category=accesorios" className="block text-gray-400 hover:text-[#F2C94C] transition-colors">
-                Accesorios
-              </Link>
-              <Link href="/search?category=electronica" className="block text-gray-400 hover:text-[#F2C94C] transition-colors">
-                Electrónica
-              </Link>
-            </nav>
-          </div>
-
           {/* Legal */}
           <div>
             <h4 className="font-semibold mb-3">Legal</h4>
@@ -69,6 +50,45 @@ export default function Footer() {
                 Política de Privacidad
               </Link>
             </nav>
+          </div>
+
+          {/* Medios de Pago */}
+          <div>
+            <h4 className="font-semibold mb-3">Medios de Pago</h4>
+            <div className="flex flex-wrap gap-2 text-gray-400">
+              {/* Tarjetas Generales SVG */}
+              <div className="flex items-center justify-center bg-white p-1 rounded w-10 h-6" title="Visa">
+                <span className="text-[#1A1F71] font-bold text-[10px] italic">VISA</span>
+              </div>
+              <div className="flex items-center justify-center bg-white p-1 rounded w-10 h-6" title="Mastercard">
+                <div className="flex">
+                  <div className="w-3 h-3 rounded-full bg-red-500 opacity-80"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500 opacity-80 -ml-1"></div>
+                </div>
+              </div>
+              <div className="flex items-center justify-center bg-white p-1 rounded w-10 h-6" title="American Express">
+                <span className="text-blue-500 font-bold text-[8px] leading-none text-center">AMEX</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Medios de Envío */}
+          <div>
+            <h4 className="font-semibold mb-3">Medios de Envío</h4>
+            <div className="flex flex-col gap-3 text-sm text-gray-400">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span>Correo Argentino</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-[#F2C94C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+                <span>Rapi Moto</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
