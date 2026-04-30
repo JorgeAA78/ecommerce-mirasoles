@@ -16,6 +16,7 @@ const CATEGORIES = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -152,20 +153,26 @@ export default function Header() {
             </Link>
             
             {/* Categorías Dropdown */}
-            <div className="relative group cursor-pointer z-50">
+            <div 
+              className="relative group cursor-pointer z-50"
+              onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+              onMouseEnter={() => setIsCategoryOpen(true)}
+              onMouseLeave={() => setIsCategoryOpen(false)}
+            >
               <span className="text-gray-300 hover:text-[#F2C94C] flex items-center gap-1 transition-colors whitespace-nowrap">
                 Categorías
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
-              <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 shadow-xl rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+              <div className={`absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 shadow-xl rounded transition-all ${isCategoryOpen ? 'opacity-100 visible' : 'opacity-0 invisible md:group-hover:opacity-100 md:group-hover:visible'}`}>
                 <div className="py-2">
                   {CATEGORIES.map((cat) => (
                     <Link
                       key={cat.value}
                       href={cat.value ? `/search?category=${cat.value}` : '/search?q='}
                       className="block px-4 py-2 text-black hover:bg-gray-100 transition-colors"
+                      onClick={() => setIsCategoryOpen(false)}
                     >
                       {cat.label}
                     </Link>
