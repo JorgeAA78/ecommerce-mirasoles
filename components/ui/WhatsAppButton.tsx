@@ -1,7 +1,7 @@
 'use client';
 
 export default function WhatsAppButton() {
-  const phoneNumber = "1161966833";
+  const phoneNumber = "5491161966833";
   const message = "Hola, me gustaría obtener más información sobre Mirasoles Market.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 

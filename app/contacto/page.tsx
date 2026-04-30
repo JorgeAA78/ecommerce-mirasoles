@@ -54,7 +54,7 @@ export default function ContactoPage() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-400">WhatsApp</p>
-                      <a href="https://wa.me/1161966833" target="_blank" rel="noopener noreferrer" className="text-lg font-semibold hover:text-[#F2C94C] transition-colors">
+                      <a href="https://wa.me/5491161966833" target="_blank" rel="noopener noreferrer" className="text-lg font-semibold hover:text-[#F2C94C] transition-colors">
                         11 6196-6833
                       </a>
                     </div>
